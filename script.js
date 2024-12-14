@@ -116,14 +116,16 @@ document.getElementById('submit-btn').addEventListener('click', async function (
         community: "SB",
         latitude: lat,
         longitude: lng,
-        start: "2020",
-        end: "2021",
+        start: "2021",
+        end: "2022",
         format: "JSON",
     };
 
     const url = `${endpoint}?${Object.entries(queryParams)
         .map(([key, value]) => `${key}=${value}`)
         .join("&")}`;
+
+    const timestamp = new Date().toLocaleString();      
 
     try {
         const response = await fetch(url);
@@ -146,10 +148,14 @@ document.getElementById('submit-btn').addEventListener('click', async function (
         alert(
             `Results:
             \n1. Average Solar Radiation: ${avgSolarRadiation.toFixed(2)} kWh/m²/day
-            \n2. Required Area: ${areaRequired.toFixed(2)} m² (to generate ${powerRequired / 1000} kWh/day)`
+            \n2. Required Area: ${areaRequired.toFixed(2)} m² (to generate ${powerRequired / 1000} kWh/day)
+            \n\nThe Data is updated from NASA API
+            \nAPI Timestamp \nLast updated on ${timestamp}`
         );
     } catch (error) {
         console.error("Error fetching solar radiation data:", error);
         alert("Failed to fetch solar radiation data. Please try again later.");
     }
 });
+
+
